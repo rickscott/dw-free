@@ -71,7 +71,8 @@ else {
 
 # a little syntactic sugar: run a git command 
 sub git {
-    system( 'git', @_ ) or die "failure trying to run: git @_\n"; 
+    system( 'git', @_ );
+    die "failure trying to run: git @_: $!\n" unless $? == 0;
 }
 
 sub configure_dw_upstream {

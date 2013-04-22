@@ -5,6 +5,7 @@ use strict;
 use 5.010;
 
 use Getopt::Long;
+use File::Temp qw( tempdir );
 
 
 # first, try to determine the user's github username: see if they gave a
@@ -38,12 +39,17 @@ if ( -d '.git' ) {
 }
 else {
     say "Checking out dw-free to $LJHOME"; 
-    git( 'clone', $github_user_url . '/dw-free.git' , $LJHOME );
+
+    # git won't let us clone to a non-empty dir, so...
+    my $tempdir = tempdir( CLEANUP => 1 );
+    git( 'clone', $github_user_url . '/dw-free.git' , $tempdir );
+    system( "mv -i $tempdir/* $LJHOME" );
+    system( "mv -i $tempdir/.[!.]* $LJHOME" );   # dotfiles except . and ..
 
     configure_dw_upstream( 'dw-free' );
 }
 
-# similar dance for dw-nonfree 
+# now we can grab dw-nonfree 
 if ( -d "$LJHOME/ext/dw-nonfree/.git" ) {
     say "Looks like you already have dw-nonfree checked out; skipping...";
 }

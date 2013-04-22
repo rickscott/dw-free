@@ -38,13 +38,16 @@ if ( -d '.git' ) {
     say "Looks like you already have dw-free checked out; skipping...";
 }
 else {
-    say "Checking out dw-free to $LJHOME"; 
-
     # git won't let us clone to a non-empty dir, so...
+    say "Checking out dw-free to a temporary directory..."; 
     my $tempdir = tempdir( CLEANUP => 1 );
+
+    say "Please enter the github password for $GITHUB_USER";
     git( 'clone', $github_user_url . '/dw-free.git' , $tempdir );
+
+    say "Moving the dw-free code to $LJHOME";
     system( "mv -i $tempdir/* $LJHOME" );
-    system( "mv -i $tempdir/.[!.]* $LJHOME" );   # dotfiles except . and ..
+    system( "mv -i $tempdir/.[!.]* $LJHOME" );  # dotfiles except . and ..
 
     configure_dw_upstream( 'dw-free' );
 }
@@ -57,6 +60,7 @@ else {
     say "Checking out dw-nonfree to $LJHOME/ext"; 
 
     chdir( "$LJHOME/ext" ) or die "Couldn't chdir to ext directory.\n";
+    say "Please enter the github password for $GITHUB_USER";
     git( 'clone', $github_user_url . '/dw-nonfree.git' );
 
     chdir( "$LJHOME/ext/dw-nonfree" ) 

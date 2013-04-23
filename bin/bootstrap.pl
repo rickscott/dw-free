@@ -88,7 +88,6 @@ sub configure_dw_upstream {
 }
 
 # finished :-)
-chdir( $LJHOME );
 say "Done! You probably want to set up the MySQL database next:"; 
 say "http://wiki.dwscoalition.org/notes/Dreamwidth_Scratch_Installation#Database_setup";
 

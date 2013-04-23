@@ -78,6 +78,8 @@ sub git {
 sub configure_dw_upstream {
     my ($repo) = @_;
 
+    say "Configuring dreamwidth's $repo as the upstream of your $repo.";
+
     my $dw_repo_url = "https://github.com/dreamwidth/$repo";
     git( qw{remote add dreamwidth}, $dw_repo_url );
     git( qw{fetch dreamwidth} );

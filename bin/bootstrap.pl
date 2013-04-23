@@ -9,11 +9,16 @@ use File::Temp qw( tempdir );
 
 
 # first, try to determine the user's github username: see if they gave a
-# --github-user arg, a single arg, or if the env var GITHUB_USER is set
+# --github-user arg, or if the env var GITHUB_USER is set
 
 my $GITHUB_USER;
-GetOptions( 'github-user=s' => \$GITHUB_USER );
-$GITHUB_USER //= $ARGV[0] if scalar @ARGV == 1;
+my $DW_NONFREE;
+
+GetOptions(
+    'github-user=s' => \$GITHUB_USER,
+    'dw-nonfree!'   => \$DW_NONFREE,
+);
+
 $GITHUB_USER //= $ENV{GITHUB_USER} if exists $ENV{GITHUB_USER};
 
 die "Can't find your github username! " .

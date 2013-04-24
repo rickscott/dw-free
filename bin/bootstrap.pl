@@ -32,10 +32,10 @@ my $github_user_url = "https://$GITHUB_USER\@github.com/$GITHUB_USER";
 system('bash', '-c', 'type git');
 die "I can't find git on your system -- is it installed?" unless $? == 0;
 
-# see if LJHOME is defined, and if we can go there
-die "Must set the \$LJHOME environment variable before running this.\n"
-    unless defined $ENV{LJHOME};
+# see if LJHOME is defined, and if we can go there 
 my $LJHOME = $ENV{LJHOME};
+die "Must set the \$LJHOME environment variable before running this.\n"
+    unless defined $LJHOME;
 chdir( $LJHOME ) or die "Couldn't chdir to \$LJHOME directory.\n";
 
 # a .git dir in $LJHOME means dw-free is checked out. otherwise, get it

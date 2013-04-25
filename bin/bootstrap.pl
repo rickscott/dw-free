@@ -57,11 +57,11 @@ else {
     configure_dw_upstream( 'dw-free' );
 }
 
-# now we can grab dw-nonfree
+# now get dw-nonfree if it's not there *and* the user has asked for it
 if ( -d "$LJHOME/ext/dw-nonfree/.git" ) {
     say "Looks like you already have dw-nonfree checked out; skipping...";
 }
-else {
+elsif ( $DW_NONFREE ) {
     say "Checking out dw-nonfree to $LJHOME/ext";
 
     chdir( "$LJHOME/ext" ) or die "Couldn't chdir to ext directory.\n";

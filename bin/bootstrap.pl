@@ -5,8 +5,6 @@ use strict;
 use 5.010;
 
 use Getopt::Long;
-use File::Temp qw( tempdir );
-
 
 # first, try to determine the user's github username: see if they gave a
 # --github-user arg, or if the env var GITHUB_USER is set
@@ -44,16 +42,10 @@ if ( -d '.git' ) {
     say "Looks like you already have dw-free checked out; skipping...";
 }
 else {
-    # git won't let us clone to a non-empty dir, so...
-    say "Checking out dw-free to a temporary directory...";
-    my $tempdir = tempdir( CLEANUP => 1 );
+    say "Checking out dw-free to $LJHOME";
 
     say "Please enter the github password for $GITHUB_USER";
-    git( 'clone', $github_user_url . '/dw-free.git' , $tempdir );
-
-    say "Moving the dw-free code to $LJHOME";
-    system( "mv -i $tempdir/* $LJHOME" );
-    system( "mv -i $tempdir/.[!.]* $LJHOME" );  # dotfiles except . and ..
+    git( 'clone', $github_user_url . '/dw-free.git', $LJHOME );
 
     configure_dw_upstream( 'dw-free' );
 }

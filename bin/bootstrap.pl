@@ -39,7 +39,7 @@ chdir( $LJHOME ) or die "Couldn't chdir to \$LJHOME directory.\n";
 
 # a .git dir in $LJHOME means dw-free is checked out. otherwise, get it
 if ( -d '.git' ) {
-    say "Looks like you already have dw-free checked out; skipping...";
+    say "Looks like you already have dw-free checked out; skipping.";
 }
 else {
     say "Checking out dw-free to $LJHOME";
@@ -52,10 +52,12 @@ else {
 
 # now get dw-nonfree if it's not there *and* the user has asked for it
 if ( -d "$LJHOME/ext/dw-nonfree/.git" ) {
-    say "Looks like you already have dw-nonfree checked out; skipping...";
+    say "Looks like you already have dw-nonfree checked out; skipping.";
 }
 elsif ( $DW_NONFREE ) {
     say "Checking out dw-nonfree to $LJHOME/ext";
+    say "Please use dw-nonfree for dreamwidth.org development only.";
+    say "See $LJHOME/ext/dw-nonfree/README for details.";
 
     chdir( "$LJHOME/ext" ) or die "Couldn't chdir to ext directory.\n";
     say "Please enter the github password for $GITHUB_USER";
@@ -65,6 +67,13 @@ elsif ( $DW_NONFREE ) {
         or die "Couldn't chdir to dw-nonfree directory.\n";
 
     configure_dw_upstream( 'dw-nonfree' );
+}
+else {
+    say "dw-nonfree not installed since it wasn't requested.";
+    say "If you are developing for dreamwidth.org, you can install the";
+    say "Dreamwidth-specific items in dw-nonfree by running this";
+    say "command again:";
+    say "    perl bootstrap.pl --github-user <username> --dw-nonfree";
 }
 
 # a little syntactic sugar: run a git command

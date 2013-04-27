@@ -70,9 +70,9 @@ elsif ( $DW_NONFREE ) {
 }
 else {
     say "dw-nonfree not installed since it wasn't requested.";
-    say "If you are developing for dreamwidth.org, you can install the";
-    say "Dreamwidth-specific items in dw-nonfree by running this";
-    say "command again:";
+    say "If you are developing for dreamwidth.org, you can install";
+    say "the Dreamwidth-specific items in dw-nonfree by running this";
+    say "command again with the option --dw-nonfree:";
     say "    perl bootstrap.pl --github-user <username> --dw-nonfree";
 }
 

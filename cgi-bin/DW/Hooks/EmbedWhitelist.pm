@@ -84,7 +84,9 @@ LJ::Hooks::register_hook( 'allow_iframe_embeds', sub {
     my $parsed_uri = URI->new( $embed_url );
 
     my $uri_scheme = $parsed_uri->scheme;
-    return 0 unless $uri_scheme eq "http" || $uri_scheme eq "https";
+    return 0 unless $uri_scheme eq "http" 
+        || $uri_scheme eq "https" 
+        || ( not defined $uri_scheme && substr($uri_scheme, 2) eq '//' );
 
     my $uri_host = $parsed_uri->host;
     my $uri_path = $parsed_uri->path;   # not including query

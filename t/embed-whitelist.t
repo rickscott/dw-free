@@ -15,7 +15,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 34;
+use Test::More tests => 37;
 
 use lib "$ENV{LJHOME}/cgi-bin";
 BEGIN { require 'ljlib.pl'; }
